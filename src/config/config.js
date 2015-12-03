@@ -4,11 +4,13 @@
 
 var appRoot = require('app-root-path').path;
 var path = require('path');
+var url = require(appRoot + '/src/config/database')();
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-//var colors = require('colors');
+var colors = require('colors');
+var mongoose = require('mongoose');
 
 var routes = require(appRoot + '/src/config/routes/index');
 var users = require(appRoot + '/src/config/routes/users');
@@ -31,6 +33,14 @@ var configApp = function(app, express) {
 
     app.use('/', routes);
     app.use('/users', users);
+
+    mongoose.connect(url, function(err) {
+        if (err) {
+            console.log('Unable to connect to the db : '.red, err);
+        } else {
+            console.log('Connected to the db!'.green);
+        }
+    });
 
     return app;
 };
