@@ -12,7 +12,7 @@ var carSchema = new Schema({
         required:true,
         validate: [validator.isLength({
             message: 'Brand must be a string between 3 and 10 chars!'
-        }, 4, 10)]
+        }, 3, 10)]
     },
 
     series :{
